@@ -1,0 +1,14 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    devservices:
+      username: testUser
+      password: testPwd
+      port: 45432
+  hibernate-orm:
+    schema-management:
+      strategy: none
+  log:
+    category:
+      "org.testcontainers":
+        level: DEBUG
