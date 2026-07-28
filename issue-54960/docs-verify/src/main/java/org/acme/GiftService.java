@@ -3,7 +3,9 @@ package org.acme;
 import java.util.List;
 
 import org.hibernate.StatelessSession;
+import org.acme.users.Gift;
 
+import io.quarkus.hibernate.orm.PersistenceUnit;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -12,31 +14,32 @@ import jakarta.transaction.Transactional;
 public class GiftService {
 
     @Inject
-    StatelessSession statelessSession;
+    @PersistenceUnit("users")
+    StatelessSession usersStatelessSession;
 
     @Transactional
     public Gift createGift(String giftDescription) {
         Gift gift = new Gift();
         gift.setName(giftDescription == null ? "" : giftDescription.trim());
-        statelessSession.insert(gift);
+        usersStatelessSession.insert(gift);
         return gift;
     }
 
     @Transactional
     public List<Gift> findAll() {
-        return statelessSession
+        return usersStatelessSession
                 .createSelectionQuery("from Gift order by id", Gift.class)
                 .getResultList();
     }
 
     @Transactional
     public boolean deleteGift(Long id) {
-        Gift gift = statelessSession.get(Gift.class, id);
+        Gift gift = usersStatelessSession.get(Gift.class, id);
         if (gift == null) {
             return false;
         }
 
-        statelessSession.delete(gift);
+        usersStatelessSession.delete(gift);
         return true;
     }
 }

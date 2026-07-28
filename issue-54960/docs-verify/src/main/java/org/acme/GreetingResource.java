@@ -2,6 +2,8 @@ package org.acme;
 
 import java.util.List;
 
+import org.acme.users.Gift;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
